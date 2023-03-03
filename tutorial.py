@@ -1,31 +1,22 @@
 import torch
-from torch import nn
-from torch.utils.data import DataLoader
-from torchvision import datasets
-from torchvision.transforms import ToTensor
+import numpy as np
 
-# Download training data from open datasets.
-training_data = datasets.FashionMNIST(
-    root="data",
-    train=True,
-    download=True,
-    transform=ToTensor(),
-)
+# initializing a tensor
 
-# Download test data from open datasets.
-test_data = datasets.FashionMNIST(
-    root="data",
-    train=False,
-    download=True,
-    transform=ToTensor(),
-)
-batch_size = 64
+## directly from data
+data = [[1,2],[3,4]]
+x_data = torch.tensor(data)
 
-# Create data loaders.
-train_dataloader = DataLoader(training_data, batch_size=batch_size)
-test_dataloader = DataLoader(test_data, batch_size=batch_size)
+## from numpy array
+np_array = np.array(data)
+x_np = torch.from_numpy(np_array)
 
-for X, y in test_dataloader:
-    print(f"Shape of X [N, C, H, W]: {X.shape}")
-    print(f"Shape of y: {y.shape} {y.dtype}")
-    break
+
+## from another tensor
+x_ones = torch.ones_like(x_data) # retains the properties of x_data
+print(f"Ones Tensor: \n {x_ones} \n")
+
+x_rand = torch.rand_like(x_data, dtype=torch.float) # overrides the datatype of x_data
+print(f"Random Tensor: \n {x_rand} \n")
+
+
